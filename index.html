@@ -6,59 +6,145 @@
 <title>SainsBattle – Tahun 4</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
   font-family:'Press Start 2P',system-ui,sans-serif;
-  background:#1a0a2e;
+  background:#150826;
   color:#fff;
   min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-  padding:12px;
+  overflow-x:hidden;
 }
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 /* ═══ SCREENS ═══ */
-.screen{display:none;width:100%;max-width:620px;flex-direction:column}
+.screen{display:none;width:100%;flex-direction:column}
 .screen.active{display:flex}
 
-/* ═══ START SCREEN ═══ */
 #start-screen{
-  align-items:center;justify-content:center;
-  min-height:95vh;gap:22px;text-align:center;
+  min-height:100vh;
+  align-items:center;
+  padding:18px 14px 28px;
+  gap:0;
+  position:relative;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, #3a1a5c 0%, transparent 70%),
+    linear-gradient(180deg,#1c0e33 0%,#150826 55%,#0d0518 100%);
+}
+#start-screen::before{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #ffffff55 50%, transparent 50%),
+    radial-gradient(1px 1px at 80% 10%, #ffffff44 50%, transparent 50%),
+    radial-gradient(1px 1px at 35% 65%, #ffffff33 50%, transparent 50%),
+    radial-gradient(1px 1px at 65% 80%, #ffffff44 50%, transparent 50%),
+    radial-gradient(1px 1px at 90% 55%, #ffffff33 50%, transparent 50%),
+    radial-gradient(1px 1px at 20% 90%, #ffffff33 50%, transparent 50%),
+    radial-gradient(1px 1px at 50% 35%, #ffffff44 50%, transparent 50%);
+  background-size:100% 100%;
+}
+
+.hub-wrap{
+  position:relative;z-index:1;
+  width:100%;max-width:980px;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+
+.hub-header{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  margin-top:6px;text-align:center;
 }
 .logo-title{
-  font-size:clamp(18px,5vw,34px);
+  font-size:clamp(20px,5.2vw,38px);
   color:#ffe066;
   text-shadow:3px 3px 0 #c8860a, 0 0 30px #ffe06680;
   line-height:1.3;letter-spacing:2px;
 }
-.logo-sub{font-size:10px;color:#a89cc8;letter-spacing:3px;margin-top:6px}
-.start-rules{
-  background:#16213e;border:3px solid #4cc9f0;border-radius:0;
-  padding:18px 22px;text-align:left;font-size:9px;line-height:2;
-  color:#c8c8e8;max-width:400px;
-  image-rendering:pixelated;
-}
-.start-rules b{color:#ffe066}
-.pixel-btn{
-  background:#ffe066;color:#1a0a2e;
-  border:none;border-bottom:5px solid #c8860a;border-right:5px solid #c8860a;
-  padding:14px 32px;font-family:inherit;font-size:11px;
-  cursor:pointer;letter-spacing:1px;
-  transition:transform .1s;
-  image-rendering:pixelated;
-}
-.pixel-btn:hover{transform:translateY(-2px)}
-.pixel-btn:active{transform:translateY(2px);border-bottom-width:2px;border-right-width:2px}
-.pixel-btn.red{background:#ef233c;color:#fff;border-color:#8b0000}
-.pixel-btn.green{background:#06d6a0;color:#000;border-color:#027a5c}
-.pixel-btn.small{padding:8px 18px;font-size:9px}
+.logo-sub{font-size:9px;color:#a89cc8;letter-spacing:3px}
 
-/* ═══ CHARACTER SELECT ═══ */
-.char-select-box{
-  background:#16213e;border:3px solid #4cc9f0;
-  padding:16px 18px;text-align:center;max-width:400px;width:100%;
+.hub-grid{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:16px;width:100%;align-items:start;
 }
-.char-select-title{font-size:9px;color:#ffe066;letter-spacing:1px;margin-bottom:12px}
+@media(max-width:860px){
+  .hub-grid{grid-template-columns:1fr}
+}
+
+.hub-panel{
+  background:#16213ecc;border:3px solid #4cc9f0;
+  padding:16px;position:relative;
+  backdrop-filter:blur(2px);
+}
+.hub-panel-title{
+  font-size:10px;color:#ffe066;letter-spacing:2px;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.hub-panel-title::after{
+  content:'';flex:1;height:2px;
+  background:repeating-linear-gradient(90deg,#4cc9f0 0 6px,transparent 6px 12px);
+}
+
+.topic-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+@media(max-width:560px){
+  .topic-grid{grid-template-columns:1fr}
+}
+.topic-card{
+  background:linear-gradient(135deg,#1f2d52 0%,#16213e 100%);
+  border:2px solid #2f4070;
+  padding:10px 12px;cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  text-align:left;
+  transition:transform .12s,border-color .12s,box-shadow .12s;
+  position:relative;overflow:hidden;
+}
+.topic-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#ffe06622,transparent 60%);
+  opacity:0;transition:opacity .15s;
+}
+.topic-card:hover{
+  transform:translateY(-3px);
+  border-color:#ffe066;
+  box-shadow:0 4px 0 #00000040;
+}
+.topic-card:hover::before{opacity:1}
+.topic-card.selected{
+  border-color:#06d6a0;
+  box-shadow:0 0 0 2px #06d6a050, inset 0 0 0 1px #06d6a0;
+}
+.topic-card.selected .topic-num{background:#06d6a0;color:#04231a}
+.topic-num{
+  flex-shrink:0;width:30px;height:30px;
+  background:#4cc9f0;color:#0d1b2a;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  border:2px solid #0d1b2a30;
+}
+.topic-info{flex:1;min-width:0}
+.topic-name{font-size:8px;color:#fff;letter-spacing:.5px;line-height:1.6}
+.topic-meta{font-size:6px;color:#7d8bb5;letter-spacing:1px;margin-top:3px}
+.topic-enemy-peek{
+  flex-shrink:0;width:34px;height:34px;
+  image-rendering:pixelated;
+  display:flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 2px 0 #00000040);
+}
+.topic-enemy-peek img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+
+.hub-side{
+  display:flex;flex-direction:column;gap:14px;
+}
+.hub-side-panel{
+  background:#16213ecc;border:3px solid #4cc9f0;
+  padding:14px;backdrop-filter:blur(2px);
+}
+.hub-side-title{
+  font-size:9px;color:#ffe066;letter-spacing:1px;margin-bottom:10px;
+}
+
 .char-slots{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px;
 }
@@ -79,55 +165,100 @@ body{
 .char-slot.selected{border-color:#ffe066;box-shadow:0 0 0 2px #ffe06650}
 .char-slot.selected .cs-name{color:#ffe066}
 
-/* ═══ BATTLE SCREEN ═══ */
-#battle-screen{gap:0}
+.hub-rules{
+  font-size:7px;line-height:2;color:#c8c8e8;letter-spacing:.5px;
+}
+.hub-rules b{color:#ffe066}
 
-/* Scene – background image with overlay */
+.start-cta-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  margin-top:4px;
+}
+.start-hint{
+  font-size:7px;color:#a89cc8;letter-spacing:1px;min-height:14px;text-align:center;
+}
+.start-hint.warn{color:#ef233c}
+
+.pixel-btn{
+  background:#ffe066;color:#1a0a2e;
+  border:none;border-bottom:5px solid #c8860a;border-right:5px solid #c8860a;
+  padding:14px 32px;font-family:inherit;font-size:11px;
+  cursor:pointer;letter-spacing:1px;
+  transition:transform .1s;
+  image-rendering:pixelated;
+  width:100%;
+}
+.pixel-btn:hover{transform:translateY(-2px)}
+.pixel-btn:active{transform:translateY(2px);border-bottom-width:2px;border-right-width:2px}
+.pixel-btn:disabled{opacity:.4;cursor:default;transform:none}
+.pixel-btn.red{background:#ef233c;color:#fff;border-color:#8b0000}
+.pixel-btn.green{background:#06d6a0;color:#000;border-color:#027a5c}
+.pixel-btn.small{padding:8px 18px;font-size:9px}
+
+/* ═══════════════════════════════════════════════════
+   BATTLE SCREEN
+   ═══════════════════════════════════════════════════ */
+#battle-screen{
+  gap:0;min-height:100vh;
+}
+
 .battle-scene{
-  position:relative;width:100%;height:240px;overflow:hidden;
+  position:relative;width:100%;
+  height:min(58vh,520px);
+  min-height:240px;
+  overflow:hidden;
   background-image:url('forest-bg.png');
   background-size:cover;
   background-position:center 35%;
   image-rendering:pixelated;
   flex-shrink:0;
 }
-/* darken slightly for contrast with HUD */
 .battle-scene::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(to bottom, rgba(20,30,15,.18) 0%, rgba(20,30,15,.05) 40%, rgba(10,20,10,.35) 100%);
   pointer-events:none;
 }
 
-/* Ground platforms — subtle shadow ellipses to "ground" the sprites on the bg */
+/* ─── REPOSITIONED shadows — matching red circles in screenshot ─── */
+/* Enemy shadow: center-right area, about 58% from left, 62% from top */
 .platform-enemy{
-  position:absolute;bottom:95px;right:160px;
-  width:120px;height:26px;
-  background:radial-gradient(ellipse 60px 13px at center,rgba(0,0,0,.35) 60%,transparent 100%);
+  position:absolute;
+  bottom:32%;
+  left:54%;
+  width:16%;height:5%;max-width:150px;max-height:28px;
+  background:radial-gradient(ellipse 60px 12px at center,rgba(0,0,0,.4) 60%,transparent 100%);
   z-index:1;
 }
+/* Player shadow: center-left, about 28% from left, 80% from top */
 .platform-player{
-  position:absolute;bottom:35px;left:170px;
-  width:120px;height:26px;
-  background:radial-gradient(ellipse 60px 13px at center,rgba(0,0,0,.35) 60%,transparent 100%);
+  position:absolute;
+  bottom:14%;
+  left:24%;
+  width:16%;height:5%;max-width:150px;max-height:28px;
+  background:radial-gradient(ellipse 60px 12px at center,rgba(0,0,0,.4) 60%,transparent 100%);
   z-index:1;
 }
 
 /* Sprites */
 .sprite{
   position:absolute;
-  width:110px;height:110px;
+  width:min(22vw,160px);height:min(22vw,160px);
   image-rendering:pixelated;
   display:flex;align-items:center;justify-content:center;
   z-index:2;
   filter:drop-shadow(0 6px 6px rgba(0,0,0,.35));
 }
-/* Enemy faces player (front) */
+
+/* ─── REPOSITIONED sprites to sit on their shadows ─── */
+/* Enemy: center-right, sitting just above its shadow */
 #enemy-sprite{
-  bottom:105px;right:165px;
+  bottom:35%;
+  left:52%;
 }
-/* Player faces away (back) */
+/* Player: center-left, sitting just above its shadow */
 #player-sprite{
-  bottom:40px;left:165px;
+  bottom:16%;
+  left:22%;
 }
 .sprite img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
 .sprite-placeholder{
@@ -138,43 +269,43 @@ body{
 }
 .sprite-placeholder .ph-icon{font-size:36px;opacity:.5}
 
-/* HP Panels – enemy top-right with its sprite peeking beside it, player bottom-left likewise */
+/* HP Panels */
 .hp-panel-enemy{
-  position:absolute;top:10px;right:8px;
+  position:absolute;top:2.5%;right:2%;
   background:#f0f0fff0;color:#222;
   border:3px solid #666;
-  padding:5px 10px 6px;min-width:140px;
-  font-size:7px;line-height:1.7;
+  padding:7px 14px 8px;min-width:170px;
+  font-size:9px;line-height:1.8;
   image-rendering:pixelated;
   z-index:3;
-  display:flex;align-items:flex-start;gap:6px;
+  display:flex;align-items:flex-start;gap:8px;
 }
 .hp-panel-player{
-  position:absolute;bottom:10px;left:8px;
+  position:absolute;bottom:2.5%;left:2%;
   background:#f0f0fff0;color:#222;
   border:3px solid #666;
-  padding:5px 10px 6px;min-width:140px;
-  font-size:7px;line-height:1.7;
+  padding:7px 14px 8px;min-width:170px;
+  font-size:9px;line-height:1.8;
   image-rendering:pixelated;
   z-index:3;
-  display:flex;align-items:flex-start;gap:6px;
+  display:flex;align-items:flex-start;gap:8px;
 }
 .hp-panel-icon{
-  width:24px;height:24px;flex-shrink:0;
+  width:30px;height:30px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   image-rendering:pixelated;
   border:2px solid #888;background:#dcdcdc;
-  font-size:12px;
+  font-size:15px;
   margin-top:1px;
 }
 .hp-panel-icon img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
 .hp-panel-info{flex:1;min-width:0}
-.hp-panel-name{font-size:9px;font-weight:700;color:#111;letter-spacing:1px}
-.hp-panel-lv{font-size:7px;color:#555;margin-left:6px}
-.hp-row{display:flex;align-items:center;gap:6px;margin-top:2px}
-.hp-label-txt{font-size:7px;color:#333;font-weight:700}
+.hp-panel-name{font-size:11px;font-weight:700;color:#111;letter-spacing:1px}
+.hp-panel-lv{font-size:8px;color:#555;margin-left:6px}
+.hp-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.hp-label-txt{font-size:8px;color:#333;font-weight:700}
 .hp-track{
-  flex:1;height:8px;
+  flex:1;height:10px;
   background:#555;
   border:1px solid #333;
   border-radius:0;overflow:hidden;
@@ -184,7 +315,7 @@ body{
   transition:width .7s cubic-bezier(.4,0,.2,1),background .4s;
   border-radius:0;
 }
-.hp-num{font-size:7px;color:#333;text-align:right;margin-top:2px}
+.hp-num{font-size:8px;color:#333;text-align:right;margin-top:2px}
 
 /* ═══ EFFECT BANNER ═══ */
 #effect-banner{
@@ -214,57 +345,65 @@ body{
 #effect-banner.super{background:#ffe066;color:#1a0a2e;border-color:#c8860a;text-shadow:1px 1px 0 #c8860a}
 #effect-banner.weak{background:#6c757d;color:#fff;border-color:#333}
 
-/* ═══ DIALOG BOX (Pokémon style) ═══ */
+/* ═══ LOWER HALF ═══ */
+.battle-lower{
+  flex:1;display:flex;flex-direction:column;
+  min-height:0;
+}
+
+/* ═══ DIALOG BOX ═══ */
 .dialog-box{
   background:#f0f0f0;color:#111;
   border:5px solid #333;
   border-top-color:#666;border-left-color:#666;
-  padding:14px 18px;
-  min-height:80px;
+  padding:16px 20px;
+  min-height:110px;
+  flex:1;
+  display:flex;flex-direction:column;justify-content:center;
   position:relative;
   flex-shrink:0;
 }
 .dialog-chapter{
-  font-size:7px;color:#777;letter-spacing:2px;
-  text-transform:uppercase;margin-bottom:6px;
+  font-size:8px;color:#777;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:8px;
 }
-.dialog-text{font-size:9px;line-height:1.9;color:#111}
+.dialog-text{font-size:11px;line-height:2;color:#111;white-space:pre-line}
 
 /* ═══ PROGRESS STRIP ═══ */
 .progress-strip{
-  background:#111;padding:6px 12px;
+  background:#111;padding:8px 14px;
   display:flex;align-items:center;justify-content:space-between;
   flex-shrink:0;
 }
-.progress-strip span{font-size:7px;color:#aaa;letter-spacing:1px}
+.progress-strip span{font-size:8px;color:#aaa;letter-spacing:1px}
 .dot-row{display:flex;gap:5px}
 .pdot{
-  width:9px;height:9px;border-radius:50%;
+  width:10px;height:10px;border-radius:50%;
   background:#333;transition:background .3s;
 }
 .pdot.done{background:#06d6a0}
 .pdot.miss{background:#ef233c}
 .pdot.cur{background:#ffe066}
 
-/* ═══ MENU BUTTON (Back to Menu) ═══ */
+/* ═══ MENU BUTTON ═══ */
 .menu-btn{
   background:#333;color:#ffe066;
   border:2px solid #555;
-  font-family:inherit;font-size:7px;
+  font-family:inherit;font-size:8px;
   letter-spacing:1px;
-  padding:5px 9px;cursor:pointer;
+  padding:6px 11px;cursor:pointer;
   transition:background .12s,border-color .12s;
 }
 .menu-btn:hover{background:#444;border-color:#ffe066}
 .menu-btn:active{background:#222}
 .menu-btn.bottom{
   margin-top:6px;
-  font-size:8px;padding:8px 18px;
+  font-size:9px;padding:10px 20px;
   background:#16213e;color:#a89cc8;border:2px solid #4cc9f0;
 }
 .menu-btn.bottom:hover{color:#ffe066;border-color:#ffe066}
 
-/* ═══ FIGHT MENU (4 buttons like Pokémon) ═══ */
+/* ═══ FIGHT MENU ═══ */
 .fight-menu{
   background:#e8e8e8;color:#111;
   border:5px solid #333;border-top:none;
@@ -274,11 +413,11 @@ body{
 .fight-btn{
   background:#e0e0e0;
   border:2px solid #bbb;
-  padding:12px 10px;
-  font-family:inherit;font-size:8px;
+  padding:16px 14px;
+  font-family:inherit;font-size:10px;
   color:#111;cursor:pointer;
-  text-align:left;line-height:1.6;
-  display:flex;align-items:flex-start;gap:6px;
+  text-align:left;line-height:1.7;
+  display:flex;align-items:flex-start;gap:8px;
   transition:background .12s;
   letter-spacing:.5px;
 }
@@ -286,9 +425,9 @@ body{
 .fight-btn:active:not(:disabled){background:#97cbf5}
 .fight-btn:disabled{cursor:default;opacity:.75}
 .fight-btn .fletter{
-  width:18px;height:18px;background:#555;color:#fff;
+  width:22px;height:22px;background:#555;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-size:8px;font-weight:700;flex-shrink:0;border-radius:2px;
+  font-size:9px;font-weight:700;flex-shrink:0;border-radius:2px;
 }
 .fight-btn.correct{background:#c8fde8;border-color:#06d6a0}
 .fight-btn.correct .fletter{background:#06d6a0;color:#000}
@@ -298,8 +437,8 @@ body{
 /* ═══ RESULT SCREEN ═══ */
 #result-screen{
   align-items:center;justify-content:center;
-  min-height:95vh;gap:18px;text-align:center;
-  padding-bottom:24px;
+  min-height:100vh;gap:18px;text-align:center;
+  padding:24px 14px;
 }
 .result-banner{
   font-size:clamp(14px,4vw,26px);
@@ -313,14 +452,14 @@ body{
 /* ═══ REWARD SCREEN ═══ */
 #reward-screen{
   align-items:center;justify-content:center;
-  min-height:95vh;gap:18px;text-align:center;
-  padding-bottom:24px;
+  min-height:100vh;gap:18px;text-align:center;
+  padding:24px 14px;
 }
 .reward-title{font-size:12px;color:#ffe066;letter-spacing:2px;line-height:1.8}
 .reward-sub{font-size:8px;color:#a89cc8;letter-spacing:1px}
 .reward-cards{
   display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-  width:100%;
+  width:100%;max-width:500px;
 }
 .reward-card{
   background:#16213e;border:3px solid #4cc9f0;
@@ -345,7 +484,7 @@ body{
 .reward-chosen .rsprite-big{width:120px;height:120px;display:flex;align-items:center;justify-content:center}
 .reward-chosen .rsprite-big img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
 .score-table{
-  width:100%;background:#16213e;
+  width:100%;max-width:500px;background:#16213e;
   border:2px solid #333;padding:10px;
   font-size:7px;line-height:2.2;
   max-height:200px;overflow-y:auto;
@@ -365,46 +504,83 @@ body{
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:480px){
-  .battle-scene{height:200px}
-  #enemy-sprite{width:85px;height:85px;bottom:80px;right:90px}
-  #player-sprite{width:85px;height:85px;bottom:32px;left:95px}
-  .platform-enemy{bottom:70px;right:90px;width:95px;height:20px}
-  .platform-player{bottom:24px;left:95px;width:95px;height:20px}
-  .hp-panel-enemy{min-width:112px;font-size:6px;right:6px;top:8px;gap:5px;padding:4px 7px 5px}
-  .hp-panel-player{min-width:112px;font-size:6px;left:6px;bottom:8px;gap:5px;padding:4px 7px 5px}
-  .hp-panel-icon{width:20px;height:20px}
-  .fight-btn{font-size:7px;padding:10px 8px}
+  .hub-wrap{gap:12px}
+  .logo-title{letter-spacing:1px}
+  .hub-panel,.hub-side-panel{padding:12px}
+  .topic-card{padding:9px 10px}
+  .topic-num{width:26px;height:26px;font-size:10px}
+  .topic-enemy-peek{width:28px;height:28px}
+  .topic-name{font-size:7px}
+
+  .battle-scene{height:38vh;min-height:200px}
+  #enemy-sprite{width:30vw;height:30vw;bottom:35%;left:50%}
+  #player-sprite{width:30vw;height:30vw;bottom:16%;left:18%}
+  .platform-enemy{bottom:32%;left:50%;width:28vw;height:7%}
+  .platform-player{bottom:13%;left:18%;width:28vw;height:7%}
+  .hp-panel-enemy{min-width:128px;font-size:7px;right:4px;top:4px;gap:6px;padding:5px 9px 6px}
+  .hp-panel-player{min-width:128px;font-size:7px;left:4px;bottom:4px;gap:6px;padding:5px 9px 6px}
+  .hp-panel-icon{width:24px;height:24px}
+  .dialog-box{padding:12px 14px;min-height:130px}
+  .dialog-text{font-size:10px;line-height:1.85}
+  .fight-btn{font-size:9px;padding:13px 10px}
   .reward-cards{grid-template-columns:repeat(3,1fr);gap:6px}
   .reward-card .rsprite{width:60px;height:60px}
   .reward-card .rname{font-size:6px}
   .char-slots{gap:6px}
   .char-slot .cs-icon{width:38px;height:38px;font-size:18px}
 }
+
+@media(max-width:380px){
+  .fight-menu{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<!-- ══════════════ START ══════════════ -->
+<!-- ══════════════ START / HUB ══════════════ -->
 <div id="start-screen" class="screen active">
-  <div class="logo-title">⚔️ SAINS<br>BATTLE!</div>
-  <div class="logo-sub">TAHUN 4 · MALAYSIA</div>
-  <div class="start-rules">
-    <b>CARA BERMAIN:</b><br>
-    • Musuh akan bertanya soalan sains<br>
-    • Jawab betul → musuh hilang 1/10 HP<br>
-    • Jawab salah → kamu hilang 1/2 HP<br>
-    • Dr. Sains (Lv.42) jauh lebih kuat —<br>
-    &nbsp;&nbsp;2 jawapan salah = kamu kalah!<br>
-    • Kalahkan musuh untuk menang!
-  </div>
+  <div class="hub-wrap">
 
-  <!-- CHARACTER SELECT -->
-  <div class="char-select-box">
-    <div class="char-select-title">PILIH WATAK KAMU</div>
-    <div class="char-slots" id="char-slots"></div>
-  </div>
+    <div class="hub-header">
+      <div class="logo-title">⚔️ SAINS BATTLE!</div>
+      <div class="logo-sub">TAHUN 4 · MALAYSIA</div>
+    </div>
 
-  <button class="pixel-btn" onclick="startGame()">▶ MULAKAN PERTARUNGAN</button>
+    <div class="hub-grid">
+
+      <!-- TOPIC SELECT -->
+      <div class="hub-panel">
+        <div class="hub-panel-title">PILIH BAB PERTARUNGAN</div>
+        <div class="topic-grid" id="topic-grid"></div>
+      </div>
+
+      <!-- SIDE: character select + rules + start -->
+      <div class="hub-side">
+        <div class="hub-side-panel">
+          <div class="hub-side-title">PILIH WATAK KAMU</div>
+          <div class="char-slots" id="char-slots"></div>
+        </div>
+
+        <div class="hub-side-panel">
+          <div class="hub-side-title">CARA BERMAIN</div>
+          <div class="hub-rules">
+            <b>•</b> Setiap bab ada 10 soalan<br>
+            <b>•</b> Jawab betul → musuh hilang 1/10 HP<br>
+            <b>•</b> Jawab salah → kamu hilang 1/2 HP<br>
+            <b>&nbsp;&nbsp;</b>(soalan KEKAL sama, cuba lagi!)<br>
+            <b>•</b> 2 jawapan salah berturut = kamu kalah<br>
+            <b>•</b> Kalahkan musuh untuk menang!
+          </div>
+        </div>
+
+        <div class="start-cta-wrap">
+          <div class="start-hint" id="start-hint">Sila pilih satu bab untuk bermula</div>
+          <button class="pixel-btn" id="start-btn" onclick="startGame()" disabled>▶ MULAKAN PERTARUNGAN</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════ BATTLE ══════════════ -->
@@ -415,42 +591,23 @@ body{
     <div class="platform-enemy"></div>
     <div class="platform-player"></div>
 
-    <!-- Enemy sprite (front-facing) -->
-    <!-- ┌─ SPRITE FILE: enemy.gif ─────────────────────────────────┐
-         This is the BOSS / ENEMY sprite shown in battle (Dr. Sains).
-         Replace "enemy.gif" below with your enemy artwork file.
-         └────────────────────────────────────────────────────────┘ -->
     <div class="sprite" id="enemy-sprite">
-      <img src="enemy.gif" alt="musuh" onerror="this.parentElement.innerHTML='<div class=\'sprite-placeholder\'><div class=\'ph-icon\'>👾</div><div>enemy.gif</div></div>'">
+      <img id="enemy-sprite-img" src="enemy1.gif" alt="musuh" onerror="this.parentElement.innerHTML='<div class=\'sprite-placeholder\'><div class=\'ph-icon\'>👾</div><div>enemy1.gif</div></div>'">
     </div>
 
-    <!-- Player sprite (back-facing) -->
-    <!-- ┌─ SPRITE FILE: player1B.gif (= PLAYER 1 / DEFAULT, BACK view) ─┐
-         This is the battle sprite for whichever character is
-         currently SELECTED on the start screen (CHAR_SLOTS).
-         By default this shows "player1B.gif" (Player 1 / MURID, back).
-         If the user picks Player 2/3/4 on the start screen, this
-         <img> src is swapped automatically via applySelectedCharacter()
-         using that character's fileB (back-facing) gif.
-         You normally don't need to edit this tag directly — just
-         provide fileF/fileB for each CHAR_SLOTS entry below.
-         └────────────────────────────────────────────────────────────┘ -->
     <div class="sprite" id="player-sprite">
       <img id="player-sprite-img" src="player1B.gif" alt="pemain" onerror="this.parentElement.innerHTML='<div class=\'sprite-placeholder\'><div class=\'ph-icon\'>🧑‍🎓</div><div>player1B.gif</div></div>'">
     </div>
 
-    <!-- Enemy HP panel (top-right), enemy icon beside it -->
-    <!-- ┌─ ICON FILE: enemy.gif ─ small icon next to enemy HP bar ─┐
-         Same file as the battle sprite above (enemy.gif).
-         └──────────────────────────────────────────────────────┘ -->
+    <!-- Enemy HP panel (top-right) -->
     <div class="hp-panel-enemy">
       <div class="hp-panel-icon">
-        <img src="enemy.gif" alt="musuh" onerror="this.parentElement.textContent='👾'">
+        <img id="enemy-hp-icon" src="enemy1.gif" alt="musuh" onerror="this.parentElement.textContent='👾'">
       </div>
       <div class="hp-panel-info">
         <div>
-          <span class="hp-panel-name">DR. SAINS</span>
-          <span class="hp-panel-lv">Lv.42</span>
+          <span class="hp-panel-name" id="enemy-name">DR. SAINS</span>
+          <span class="hp-panel-lv" id="enemy-lv">Lv.42</span>
         </div>
         <div class="hp-row">
           <span class="hp-label-txt">HP</span>
@@ -459,12 +616,7 @@ body{
       </div>
     </div>
 
-    <!-- Player HP panel (bottom-left), player icon beside it -->
-    <!-- ┌─ ICON FILE: player1B.gif (= PLAYER 1 / DEFAULT, BACK view) ─┐
-         Small icon next to the player's HP bar. Mirrors whatever
-         character is selected, same as #player-sprite-img above
-         (uses each character's fileB / back view).
-         └─────────────────────────────────────────────────────────┘ -->
+    <!-- Player HP panel (bottom-left) -->
     <div class="hp-panel-player">
       <div class="hp-panel-icon">
         <img id="player-hp-icon" src="player1B.gif" alt="pemain" onerror="this.parentElement.textContent='🧑‍🎓'">
@@ -486,21 +638,24 @@ body{
     <div id="effect-banner"></div>
   </div>
 
-  <!-- PROGRESS STRIP -->
-  <div class="progress-strip">
-    <button class="menu-btn" onclick="confirmBackToMenu()">⏪ MENU</button>
-    <span id="q-counter">SOALAN 1/10</span>
-    <div class="dot-row" id="dot-row"></div>
-  </div>
+  <!-- LOWER HALF -->
+  <div class="battle-lower">
+    <!-- PROGRESS STRIP -->
+    <div class="progress-strip">
+      <button class="menu-btn" onclick="confirmBackToMenu()">⏪ MENU</button>
+      <span id="q-counter">SOALAN 1/10</span>
+      <div class="dot-row" id="dot-row"></div>
+    </div>
 
-  <!-- DIALOG -->
-  <div class="dialog-box">
-    <div class="dialog-chapter" id="dialog-chapter"></div>
-    <div class="dialog-text" id="dialog-text"></div>
-  </div>
+    <!-- DIALOG -->
+    <div class="dialog-box">
+      <div class="dialog-chapter" id="dialog-chapter"></div>
+      <div class="dialog-text" id="dialog-text"></div>
+    </div>
 
-  <!-- FIGHT MENU (4 answers) -->
-  <div class="fight-menu" id="fight-menu"></div>
+    <!-- FIGHT MENU (4 answers) -->
+    <div class="fight-menu" id="fight-menu"></div>
+  </div>
 
 </div>
 
@@ -528,53 +683,159 @@ body{
 </div>
 
 <script>
-const QUESTIONS=[
-  {chapter:"Bab 1: Kemahiran Saintifik",
-   text:"Dr. Sains menggunakan\nSERANGAN DERIA!\n\n\"Deria manakah yang digunakan untuk mengenal pasti BAU sesuatu bahan?\"",
-   options:["Mata","Hidung","Lidah","Telinga"],answer:1},
-  {chapter:"Bab 2: Manusia",
-   text:"Dr. Sains menggunakan\nSERANGAN ANATOMI!\n\n\"Organ PERNAFASAN manusia ialah...?\"",
-   options:["Jantung","Hati","Paru-paru","Buah pinggang"],answer:2},
-  {chapter:"Bab 3: Haiwan",
-   text:"Dr. Sains menggunakan\nSERANGAN BIOLOGI!\n\n\"Apakah fungsi INSANG pada ikan?\"",
-   options:["Bergerak","Membiak","Bernafas","Makan"],answer:2},
-  {chapter:"Bab 4: Tumbuhan",
-   text:"Dr. Sains menggunakan\nSERANGAN BOTANI!\n\n\"Bahagian tumbuhan yang menyerap air dan garam mineral ialah...?\"",
-   options:["Daun","Batang","Bunga","Akar"],answer:3},
-  {chapter:"Bab 5: Sifat Cahaya",
-   text:"Dr. Sains menggunakan\nSERANGAN CAHAYA!\n\n\"Manakah yang menunjukkan cahaya bergerak dalam GARIS LURUS?\"",
-   options:["Pelangi selepas hujan","Bayang di belakang objek","Cermin pantulkan imej","Air kelihatan berkilau"],answer:1},
-  {chapter:"Bab 6: Bunyi",
-   text:"Dr. Sains menggunakan\nSERANGAN AKUSTIK!\n\n\"Bunyi terhasil apabila sesuatu objek...?\"",
-   options:["Cair","Membeku","Bergetar","Bergerak perlahan"],answer:2},
-  {chapter:"Bab 7: Tenaga",
-   text:"Dr. Sains menggunakan\nSERANGAN SOLAR!\n\n\"Apakah sumber tenaga UTAMA bagi Bumi?\"",
-   options:["Bulan","Matahari","Angin","Air"],answer:1},
-  {chapter:"Bab 8: Bahan",
-   text:"Dr. Sains menggunakan\nSERANGAN BAHAN!\n\n\"Yang manakah bahan yang boleh MENYERAP air?\"",
-   options:["Plastik","Kaca","Span","Logam"],answer:2},
-  {chapter:"Bab 9: Bumi",
-   text:"Dr. Sains menggunakan\nSERANGAN BUMI!\n\n\"Apakah yang menyebabkan berlakunya SIANG dan MALAM?\"",
-   options:["Bumi mengelilingi Matahari","Bumi berputar pada paksi","Bulan mengelilingi Bumi","Tiupan angin"],answer:1},
-  {chapter:"Bab 10: Mesin",
-   text:"Dr. Sains menggunakan\nSERANGAN MESIN!\n\n\"Mesin ringkas pada JUNGKAT-JUNGKIT ialah...?\"",
-   options:["Takal","Tuas","Baji","Roda dan gandar"],answer:1}
+const TOPICS=[
+  {
+    id:1,name:"Kemahiran Saintifik",enemyFile:"enemy1.gif",enemyName:"PROF. DERIA",enemyLv:"Lv.41",
+    questions:[
+      {text:"Apakah deria yang digunakan untuk mengenal pasti bau sesuatu bahan?",options:["Mata","Hidung","Lidah","Telinga"],answer:1},
+      {text:"Deria manakah digunakan untuk mendengar bunyi?",options:["Mata","Hidung","Telinga","Kulit"],answer:2},
+      {text:"Apakah alat yang digunakan untuk mengukur panjang?",options:["Jam randik","Pembaris","Penimbang","Termometer"],answer:1},
+      {text:"Apakah alat yang digunakan untuk mengukur suhu?",options:["Pembaris","Neraca","Termometer","Jam randik"],answer:2},
+      {text:"Antara berikut, yang manakah merupakan pemerhatian menggunakan deria penglihatan?",options:["Bunga berbau harum","Air terasa masin","Daun berwarna hijau","Loceng berbunyi kuat"],answer:2},
+      {text:"Apakah langkah pertama dalam penyiasatan saintifik?",options:["Membuat kesimpulan","Membuat pemerhatian","Mengumpul data","Melapor hasil"],answer:1},
+      {text:"Apakah alat yang digunakan untuk mengukur masa?",options:["Jam randik","Neraca","Pembaris","Mikroskop"],answer:0},
+      {text:"Apakah tujuan merekod data?",options:["Menghilangkan maklumat","Menyimpan maklumat untuk rujukan","Menambah eksperimen","Mengubah keputusan"],answer:1},
+      {text:"Antara berikut, yang manakah deria sentuhan?",options:["Mata","Hidung","Kulit","Lidah"],answer:2},
+      {text:"Apakah yang perlu dilakukan selepas mengumpul data?",options:["Menganalisis data","Membuang data","Menutup buku","Mengulangi eksperimen tanpa sebab"],answer:0}
+    ]
+  },
+  {
+    id:2,name:"Manusia",enemyFile:"enemy2.gif",enemyName:"DR. ANATOMI",enemyLv:"Lv.42",
+    questions:[
+      {text:"Antara berikut, yang manakah organ pernafasan manusia?",options:["Jantung","Hati","Paru-paru","Buah pinggang"],answer:2},
+      {text:"Organ yang mengepam darah ke seluruh badan ialah",options:["Paru-paru","Jantung","Otak","Perut"],answer:1},
+      {text:"Apakah fungsi rangka manusia?",options:["Menghadam makanan","Menyokong badan","Menghasilkan darah","Bernafas"],answer:1},
+      {text:"Apakah fungsi gigi?",options:["Bernafas","Mengunyah makanan","Mendengar bunyi","Melihat objek"],answer:1},
+      {text:"Antara berikut, yang manakah amalan menjaga kesihatan gigi?",options:["Makan gula setiap masa","Tidak memberus gigi","Memberus gigi dua kali sehari","Mengunyah ais"],answer:2},
+      {text:"Organ yang mengawal semua aktiviti badan ialah",options:["Otak","Jantung","Hati","Kulit"],answer:0},
+      {text:"Mengapakah kita perlu bersenam?",options:["Menjadi letih","Menjaga kesihatan badan","Mengurangkan tidur","Menambah penyakit"],answer:1},
+      {text:"Makanan seimbang penting untuk",options:["Kesihatan tubuh badan","Menambah penyakit","Mengantuk sepanjang masa","Mengurangkan tenaga"],answer:0},
+      {text:"Apakah fungsi paru-paru?",options:["Mengepam darah","Bernafas","Menghadam makanan","Mengawal pergerakan"],answer:1},
+      {text:"Air penting kepada manusia kerana",options:["Membantu fungsi badan","Menyebabkan penyakit","Menggantikan makanan","Mengurangkan tenaga"],answer:0}
+    ]
+  },
+  {
+    id:3,name:"Haiwan",enemyFile:"enemy3.gif",enemyName:"RAJA RIMBA",enemyLv:"Lv.43",
+    questions:[
+      {text:"Apakah fungsi insang pada ikan?",options:["Bergerak","Membiak","Bernafas","Makan"],answer:2},
+      {text:"Haiwan yang hidup di darat dan air dipanggil",options:["Mamalia","Amfibia","Reptilia","Burung"],answer:1},
+      {text:"Apakah haiwan yang bernafas menggunakan insang?",options:["Kucing","Burung","Ikan","Kuda"],answer:2},
+      {text:"Apakah fungsi sayap pada burung?",options:["Bernafas","Terbang","Menggali tanah","Menangkap ikan"],answer:1},
+      {text:"Antara berikut, yang manakah mamalia?",options:["Katak","Ikan","Kucing","Ular"],answer:2},
+      {text:"Haiwan yang bertelur ialah",options:["Kucing","Ayam","Lembu","Arnab"],answer:1},
+      {text:"Apakah fungsi kulit tebal pada gajah?",options:["Perlindungan","Terbang","Bernafas","Makan"],answer:0},
+      {text:"Ular bergerak dengan cara",options:["Terbang","Melompat","Menyusur","Berenang sahaja"],answer:2},
+      {text:"Haiwan memerlukan makanan untuk",options:["Bermain","Mendapat tenaga","Tidur","Bersembunyi"],answer:1},
+      {text:"Haiwan yang aktif pada waktu malam dipanggil",options:["Diurnal","Nokturnal","Akuatik","Herbivor"],answer:1}
+    ]
+  },
+  {
+    id:4,name:"Tumbuhan",enemyFile:"enemy4.gif",enemyName:"RATU BOTANI",enemyLv:"Lv.44",
+    questions:[
+      {text:"Bahagian tumbuhan yang menyerap air dan garam mineral ialah",options:["Daun","Batang","Bunga","Akar"],answer:3},
+      {text:"Apakah fungsi daun?",options:["Menyerap air","Membuat makanan","Menyokong tumbuhan","Menyimpan biji benih"],answer:1},
+      {text:"Bunga berfungsi untuk",options:["Pembiakan","Menyerap air","Menyokong pokok","Mengangkut air"],answer:0},
+      {text:"Batang berfungsi untuk",options:["Menyerap air","Menyokong tumbuhan","Membuat makanan sahaja","Menghasilkan bunga sahaja"],answer:1},
+      {text:"Tumbuhan memerlukan cahaya matahari untuk",options:["Fotosintesis","Bergerak","Tidur","Membiak"],answer:0},
+      {text:"Antara berikut, yang manakah bahagian tumbuhan?",options:["Akar","Insang","Sayap","Paru-paru"],answer:0},
+      {text:"Buah mengandungi",options:["Air sahaja","Biji benih","Akar","Batang"],answer:1},
+      {text:"Air diserap oleh tumbuhan melalui",options:["Bunga","Daun","Akar","Buah"],answer:2},
+      {text:"Tumbuhan hijau menghasilkan makanan menggunakan",options:["Cahaya matahari","Bunyi","Angin sahaja","Haba sahaja"],answer:0},
+      {text:"Antara berikut, yang manakah diperlukan oleh tumbuhan untuk hidup?",options:["Air","Plastik","Kaca","Besi"],answer:0}
+    ]
+  },
+  {
+    id:5,name:"Sifat Cahaya",enemyFile:"enemy5.gif",enemyName:"BAYANGAN CAHAYA",enemyLv:"Lv.45",
+    questions:[
+      {text:"Cahaya bergerak dalam",options:["Bulatan","Garis lurus","Zig-zag","Segi tiga"],answer:1},
+      {text:"Bayang-bayang terbentuk apabila",options:["Cahaya dihalang objek","Angin bertiup","Hujan turun","Air mengalir"],answer:0},
+      {text:"Matahari ialah sumber",options:["Bunyi","Cahaya semula jadi","Elektrik","Magnet"],answer:1},
+      {text:"Antara berikut, yang manakah sumber cahaya buatan?",options:["Matahari","Bintang","Lampu suluh","Kilat"],answer:2},
+      {text:"Cermin memantulkan",options:["Bunyi","Cahaya","Haba sahaja","Air"],answer:1},
+      {text:"Objek legap tidak membenarkan cahaya",options:["Masuk","Keluar","Dipantulkan","Dibiaskan"],answer:0},
+      {text:"Antara berikut, yang manakah objek telus cahaya?",options:["Kaca jernih","Kayu","Batu","Kadbod"],answer:0},
+      {text:"Pelangi terbentuk akibat",options:["Pembiasan cahaya","Bunyi","Magnet","Geseran"],answer:0},
+      {text:"Bayang-bayang paling pendek berlaku pada waktu",options:["Pagi","Tengah hari","Petang","Malam"],answer:1},
+      {text:"Cahaya membantu kita untuk",options:["Mendengar","Melihat","Menghidu","Merasa"],answer:1}
+    ]
+  },
+  {
+    id:6,name:"Bunyi",enemyFile:"enemy6.gif",enemyName:"GEMA RAKSASA",enemyLv:"Lv.46",
+    questions:[
+      {text:"Bunyi terhasil apabila objek",options:["Bergetar","Membeku","Cair","Pecah"],answer:0},
+      {text:"Bunyi bergerak melalui",options:["Medium","Cahaya","Bayang-bayang","Magnet"],answer:0},
+      {text:"Bunyi yang kuat boleh merosakkan",options:["Mata","Hidung","Telinga","Kulit"],answer:2},
+      {text:"Antara berikut, yang manakah menghasilkan bunyi?",options:["Gendang dipukul","Batu diam","Buku ditutup","Air pegun"],answer:0},
+      {text:"Bunyi tidak boleh bergerak dalam",options:["Air","Udara","Pepejal","Vakum"],answer:3},
+      {text:"Telinga berfungsi untuk",options:["Mendengar bunyi","Melihat objek","Menghidu bau","Menyentuh objek"],answer:0},
+      {text:"Bunyi yang perlahan sukar untuk",options:["Dilihat","Didengar","Dipegang","Dihidu"],answer:1},
+      {text:"Kilat dilihat dahulu sebelum guruh didengar kerana",options:["Cahaya bergerak lebih laju","Bunyi bergerak lebih laju","Angin bertiup","Hujan turun"],answer:0},
+      {text:"Mikrofon digunakan untuk",options:["Menguatkan bunyi","Menyerap air","Menyimpan tenaga","Menghasilkan cahaya"],answer:0},
+      {text:"Bunyi boleh dipantulkan dan menghasilkan",options:["Bayang-bayang","Gema","Cahaya","Pelangi"],answer:1}
+    ]
+  },
+  {
+    id:7,name:"Tenaga",enemyFile:"enemy7.gif",enemyName:"TERAS TENAGA",enemyLv:"Lv.47",
+    questions:[
+      {text:"Apakah sumber tenaga utama bagi Bumi?",options:["Bulan","Matahari","Angin","Air"],answer:1},
+      {text:"Tenaga diperlukan untuk",options:["Bergerak","Tidur sahaja","Duduk sahaja","Bermain sahaja"],answer:0},
+      {text:"Makanan membekalkan",options:["Cahaya","Bunyi","Tenaga","Magnet"],answer:2},
+      {text:"Kipas elektrik menggunakan tenaga",options:["Kimia","Elektrik","Cahaya","Bunyi"],answer:1},
+      {text:"Bateri menyimpan tenaga",options:["Cahaya","Bunyi","Kimia","Haba"],answer:2},
+      {text:"Matahari membekalkan tenaga",options:["Cahaya dan haba","Bunyi dan cahaya","Haba sahaja","Air sahaja"],answer:0},
+      {text:"Tenaga boleh berubah dari satu bentuk ke bentuk lain. Ini dipanggil",options:["Penyerapan","Penukaran tenaga","Pantulan","Pembiasan"],answer:1},
+      {text:"Seterika elektrik menghasilkan tenaga",options:["Bunyi","Haba","Cahaya","Kimia"],answer:1},
+      {text:"Petrol ialah sumber tenaga untuk",options:["Kereta","Buku","Pensel","Kertas"],answer:0},
+      {text:"Menutup suis lampu apabila tidak digunakan dapat",options:["Membazir tenaga","Menjimatkan tenaga","Menambah haba","Menambah bunyi"],answer:1}
+    ]
+  },
+  {
+    id:8,name:"Bahan",enemyFile:"enemy8.gif",enemyName:"GOLEM BAHAN",enemyLv:"Lv.48",
+    questions:[
+      {text:"Yang manakah bahan yang boleh menyerap air?",options:["Plastik","Kaca","Span","Logam"],answer:2},
+      {text:"Antara berikut, yang manakah kalis air?",options:["Kertas","Kain","Plastik","Tisu"],answer:2},
+      {text:"Besi merupakan bahan",options:["Logam","Kayu","Plastik","Getah"],answer:0},
+      {text:"Kayu biasanya digunakan untuk membuat",options:["Tingkap kaca","Perabot","Botol","Sudu logam"],answer:1},
+      {text:"Getah bersifat",options:["Mudah pecah","Kenyal","Tajam","Keras"],answer:1},
+      {text:"Kaca biasanya bersifat",options:["Legap","Telus","Lembut","Kenyal"],answer:1},
+      {text:"Bahan yang terapung di atas air mempunyai ketumpatan",options:["Tinggi","Rendah","Sama","Tetap"],answer:1},
+      {text:"Kertas mudah",options:["Menyerap air","Memantulkan bunyi","Menghasilkan cahaya","Menghasilkan tenaga"],answer:0},
+      {text:"Logam ialah pengalir yang baik bagi",options:["Haba dan elektrik","Air sahaja","Bunyi sahaja","Udara sahaja"],answer:0},
+      {text:"Pemilihan bahan yang sesuai penting untuk",options:["Keselamatan dan kegunaan","Menambah kos","Mengurangkan fungsi","Mencantikkan sahaja"],answer:0}
+    ]
+  },
+  {
+    id:9,name:"Bumi",enemyFile:"enemy9.gif",enemyName:"PENJAGA BUMI",enemyLv:"Lv.49",
+    questions:[
+      {text:"Apakah yang menyebabkan siang dan malam?",options:["Peredaran Bumi mengelilingi Matahari","Putaran Bumi pada paksinya","Peredaran Bulan","Angin"],answer:1},
+      {text:"Bumi berbentuk",options:["Segi empat","Sfera","Segi tiga","Silinder"],answer:1},
+      {text:"Bumi beredar mengelilingi",options:["Bulan","Matahari","Marikh","Zuhrah"],answer:1},
+      {text:"Satelit semula jadi Bumi ialah",options:["Matahari","Bulan","Bintang","Komet"],answer:1},
+      {text:"Permukaan Bumi terdiri daripada",options:["Daratan dan air","Batu sahaja","Air sahaja","Logam sahaja"],answer:0},
+      {text:"Hujan berasal daripada",options:["Awan","Tanah","Angin","Matahari"],answer:0},
+      {text:"Kitaran air melibatkan proses",options:["Penyejatan","Fotosintesis","Respirasi sahaja","Pembiakan"],answer:0},
+      {text:"Gempa bumi berlaku akibat",options:["Pergerakan kerak Bumi","Hujan lebat","Angin kuat","Cahaya matahari"],answer:0},
+      {text:"Gunung berapi mengeluarkan",options:["Salji","Lava","Ais","Pasir sahaja"],answer:1},
+      {text:"Kita perlu menjaga alam sekitar untuk",options:["Kehidupan yang lebih baik","Menambah pencemaran","Mengurangkan tumbuhan","Menyebabkan banjir"],answer:0}
+    ]
+  },
+  {
+    id:10,name:"Mesin",enemyFile:"enemy10.gif",enemyName:"MEKA-BOS",enemyLv:"Lv.50",
+    questions:[
+      {text:"Apakah jenis mesin ringkas yang digunakan pada jungkat-jungkit?",options:["Takal","Tuas","Baji","Roda dan gandar"],answer:1},
+      {text:"Gunting ialah gabungan mesin ringkas",options:["Tuas dan baji","Takal dan skru","Roda dan gandar","Satah condong"],answer:0},
+      {text:"Apakah fungsi mesin ringkas?",options:["Menyukarkan kerja","Memudahkan kerja","Menambah masa kerja","Mengurangkan keselamatan"],answer:1},
+      {text:"Tangga ialah contoh",options:["Takal","Satah condong","Tuas","Baji"],answer:1},
+      {text:"Kapak ialah contoh",options:["Baji","Tuas","Takal","Skru"],answer:0},
+      {text:"Roda basikal ialah contoh",options:["Baji","Skru","Roda dan gandar","Tuas"],answer:2},
+      {text:"Takal digunakan untuk",options:["Mengangkat beban","Memotong kayu","Menulis","Menyukat masa"],answer:0},
+      {text:"Skru mempunyai satah condong yang",options:["Lurus","Berputar mengelilingi silinder","Rata","Melengkung"],answer:1},
+      {text:"Pembuka botol ialah contoh",options:["Tuas","Baji","Takal","Skru"],answer:0},
+      {text:"Mesin kompleks ialah",options:["Gabungan beberapa mesin ringkas","Satu mesin ringkas sahaja","Tiada mesin ringkas","Alat semula jadi"],answer:0}
+    ]
+  }
 ];
 
-// ═══ REWARD CHARACTERS (shown on the win/reward screen) ═══
-// These are the possible "buddy" rewards you can recruit after a win.
-// 3 are shown at random (without repeats across playthroughs — once
-// chosen, a character is removed from the pool, see REWARD_POOL below).
-// Whichever one is chosen gets ADDED as a brand-new slot in CHAR_SLOTS
-// (see chooseReward()).
-//
-// Same naming convention as the player slots: PLAYER 3..8, each with
-// TWO gif files:
-//   fileF = FRONT-facing view → used on reward cards / character
-//           select screen (you're looking at its face).
-//   fileB = BACK-facing view  → used as the BATTLE sprite once this
-//           character is recruited and selected.
-// Files needed: player3F.gif/player3B.gif ... player8F.gif/player8B.gif
 const REWARD_CHARACTERS=[
   {name:"LABOSAURUS",type:"Jenis: Sains",fileF:"player3F.gif",fileB:"player3B.gif",desc:"Pakar sains makmal!\nSentiasa ingin tahu."},
   {name:"ATOMIKUS",type:"Jenis: Fizik",fileF:"player4F.gif",fileB:"player4B.gif",desc:"Menguasai kuasa atom.\nPantas seperti cahaya!"},
@@ -584,51 +845,40 @@ const REWARD_CHARACTERS=[
   {name:"MICROSCO",type:"Jenis: Biologi",fileF:"player8F.gif",fileB:"player8B.gif",desc:"Saiz kecil, ilmu besar.\nPakar sel!"}
 ];
 
-// Mutable pool — characters are removed from here once recruited so
-// they won't be offered again as a reward.
 let REWARD_POOL=[...REWARD_CHARACTERS];
 
 const LETTERS=['A','B','C','D'];
-const TOTAL=QUESTIONS.length;
 const MAX_HP=10;
-// PLAYER_DMG: damage dealt TO THE ENEMY for each correct answer.
-//   1/10 of enemy HP per question (10 correct answers = enemy defeated).
 const PLAYER_DMG=1;
-// ENEMY_DMG: damage dealt TO THE PLAYER for each wrong answer.
-//   Dr. Sains (Lv.42) hits much harder than MURID (Lv.17) —
-//   1/2 of player HP per wrong answer, so 2 wrong answers = defeat.
 const ENEMY_DMG=5;
 
-// ═══ CHARACTER SLOTS (start-screen "choose your character") ═══
-// These are the icons shown in the character-select box on the start
-// screen. Whichever one is selected becomes the player's BATTLE
-// SPRITE + HP-panel icon (see #player-sprite-img and #player-hp-icon
-// in the HTML above).
-//
-// Each character has TWO gif files:
-//   fileF = FRONT-facing view → shown in the character-select slot
-//           on the start screen (you're picking a face).
-//   fileB = BACK-facing view  → used as the BATTLE sprite + HP icon
-//           once this character is selected (you see your own
-//           character's back during battle).
-//
-// PLAYER 1 (fileF:"player1F.gif", fileB:"player1B.gif") and
-// PLAYER 2 (fileF:"player2F.gif", fileB:"player2B.gif") are FIXED,
-// always-available starting characters — both unlocked from the start.
-//
-// There are NO locked/mystery slots anymore. Instead, every time you
-// WIN a battle and pick a reward character, a brand-new slot is
-// APPENDED to this array (see chooseReward() near the bottom of this
-// script), so the character-select grid grows over time as you collect
-// more characters (PLAYER 3, 4, 5... using player3F/B.gif etc. from
-// REWARD_CHARACTERS above).
 const CHAR_SLOTS=[
-  {id:0,name:"MURID",fileF:"player1F.gif",fileB:"player1B.gif",icon:"🧑‍🎓"}, // PLAYER 1 (fixed default)
-  {id:1,name:"KAWAN",fileF:"player2F.gif",fileB:"player2B.gif",icon:"🧑‍🚀"}  // PLAYER 2 (fixed)
+  {id:0,name:"MURID",fileF:"player1F.gif",fileB:"player1B.gif",icon:"🧑‍🎓"},
+  {id:1,name:"KAWAN",fileF:"player2F.gif",fileB:"player2B.gif",icon:"🧑‍🚀"}
 ];
 
 let state={};
 let selectedCharIndex=0;
+let selectedTopicIndex=-1;
+
+/* ═══════════════════════════════════════════════
+   SHUFFLE ANSWERS
+   Returns { shuffledOptions, correctShuffledIndex }
+   given the original options array and correct answer index.
+   We Fisher-Yates shuffle the indices, then remap.
+═══════════════════════════════════════════════ */
+function shuffleAnswers(options, correctIndex) {
+  // Build index array [0,1,2,3], shuffle it
+  const indices = options.map((_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const shuffledOptions = indices.map(i => options[i]);
+  // Find where the correct answer ended up after shuffle
+  const correctShuffledIndex = indices.indexOf(correctIndex);
+  return { shuffledOptions, correctShuffledIndex };
+}
 
 function renderCharSlots(){
   const el=document.getElementById('char-slots');
@@ -638,14 +888,10 @@ function renderCharSlots(){
     let cls='char-slot unlocked';
     if(i===selectedCharIndex) cls+=' selected';
     slot.className=cls;
-
-    // Character-select shows the FRONT-facing (fileF) view
     const iconHtml=c.fileF
       ? `<div class="cs-icon"><img src="${c.fileF}" alt="${c.name}" onerror="this.parentElement.textContent='${c.icon}'"></div>`
       : `<div class="cs-icon">${c.icon}</div>`;
-
     slot.innerHTML=`${iconHtml}<div class="cs-name">${c.name}</div>`;
-
     slot.addEventListener('click',()=>{
       selectedCharIndex=i;
       renderCharSlots();
@@ -654,9 +900,62 @@ function renderCharSlots(){
   });
 }
 
+function renderTopicGrid(){
+  const el=document.getElementById('topic-grid');
+  el.innerHTML='';
+  TOPICS.forEach((t,i)=>{
+    const card=document.createElement('div');
+    card.className='topic-card'+(i===selectedTopicIndex?' selected':'');
+    card.innerHTML=`
+      <div class="topic-num">${t.id}</div>
+      <div class="topic-info">
+        <div class="topic-name">${t.name.toUpperCase()}</div>
+        <div class="topic-meta">${t.enemyName} · ${t.enemyLv}</div>
+      </div>
+      <div class="topic-enemy-peek">
+        <img src="${t.enemyFile}" alt="${t.enemyName}" onerror="this.parentElement.textContent='👾'">
+      </div>
+    `;
+    card.addEventListener('click',()=>{
+      selectedTopicIndex=i;
+      renderTopicGrid();
+      updateStartState();
+    });
+    el.appendChild(card);
+  });
+}
+
+function updateStartState(){
+  const hint=document.getElementById('start-hint');
+  const btn=document.getElementById('start-btn');
+  if(selectedTopicIndex===-1){
+    hint.textContent='Sila pilih satu bab untuk bermula';
+    hint.className='start-hint';
+    btn.disabled=true;
+  }else{
+    const t=TOPICS[selectedTopicIndex];
+    hint.textContent=`Bab dipilih: BAB ${t.id} - ${t.name.toUpperCase()}`;
+    hint.className='start-hint';
+    btn.disabled=false;
+  }
+}
+
 function startGame(){
-  state={qIndex:0,playerHP:MAX_HP,enemyHP:MAX_HP,results:[],answered:false};
+  if(selectedTopicIndex===-1)return;
+  const topic=TOPICS[selectedTopicIndex];
+  state={
+    topic:topic,
+    qIndex:0,
+    playerHP:MAX_HP,
+    enemyHP:MAX_HP,
+    results:[],
+    answered:false,
+    // Store shuffled versions of all questions up-front so retries
+    // on the same question keep the same shuffled order (not re-shuffled)
+    shuffled: topic.questions.map(q => shuffleAnswers(q.options, q.answer))
+  };
   applySelectedCharacter();
+  applySelectedTopic();
   showScreen('battle-screen');
   buildDots();
   renderQuestion();
@@ -664,12 +963,19 @@ function startGame(){
 
 function applySelectedCharacter(){
   const c=CHAR_SLOTS[selectedCharIndex];
-  // Battle view always shows the BACK-facing (fileB) sprite.
   const file=(c && c.fileB)?c.fileB:'player1B.gif';
   const spriteImg=document.getElementById('player-sprite-img');
   const hpIcon=document.getElementById('player-hp-icon');
   if(spriteImg) spriteImg.src=file;
   if(hpIcon) hpIcon.src=file;
+}
+
+function applySelectedTopic(){
+  const t=TOPICS[selectedTopicIndex];
+  document.getElementById('enemy-sprite-img').src=t.enemyFile;
+  document.getElementById('enemy-hp-icon').src=t.enemyFile;
+  document.getElementById('enemy-name').textContent=t.enemyName;
+  document.getElementById('enemy-lv').textContent=t.enemyLv;
 }
 
 function showScreen(id){
@@ -678,15 +984,13 @@ function showScreen(id){
   window.scrollTo(0,0);
 }
 
-// Returns to the start screen. Re-renders character slots so any
-// newly-recruited reward character shows up in the selection grid.
 function backToMenu(){
   renderCharSlots();
+  renderTopicGrid();
+  updateStartState();
   showScreen('start-screen');
 }
 
-// Used mid-battle: ask for confirmation before quitting, since
-// progress in the current battle would be lost.
 function confirmBackToMenu(){
   if(confirm('Keluar ke menu utama?\nKemajuan pertarungan ini akan hilang.')){
     backToMenu();
@@ -696,7 +1000,7 @@ function confirmBackToMenu(){
 function buildDots(){
   const el=document.getElementById('dot-row');
   el.innerHTML='';
-  for(let i=0;i<TOTAL;i++){
+  for(let i=0;i<state.topic.questions.length;i++){
     const d=document.createElement('div');
     d.className='pdot'+(i===0?' cur':'');
     d.id='pd'+i;
@@ -709,67 +1013,74 @@ function setDot(i,cls){
 }
 
 function renderQuestion(){
-  const q=QUESTIONS[state.qIndex];
+  const total=state.topic.questions.length;
+  const q=state.topic.questions[state.qIndex];
+  const {shuffledOptions, correctShuffledIndex}=state.shuffled[state.qIndex];
   state.answered=false;
-  document.getElementById('q-counter').textContent=`SOALAN ${state.qIndex+1}/${TOTAL}`;
-  document.getElementById('dialog-chapter').textContent=q.chapter.toUpperCase();
-  document.getElementById('dialog-text').textContent=q.text;
+  document.getElementById('q-counter').textContent=`SOALAN ${state.qIndex+1}/${total}`;
+  document.getElementById('dialog-chapter').textContent=`BAB ${state.topic.id}: ${state.topic.name.toUpperCase()}`;
+  document.getElementById('dialog-text').textContent=
+    `${state.topic.enemyName} menyerang!\n\n"${q.text}"`;
   updateHP();
 
   const menu=document.getElementById('fight-menu');
   menu.innerHTML='';
-  q.options.forEach((opt,i)=>{
+  shuffledOptions.forEach((opt,i)=>{
     const btn=document.createElement('button');
     btn.className='fight-btn';
     btn.innerHTML=`<span class="fletter">${LETTERS[i]}</span><span>${opt}</span>`;
-    btn.addEventListener('click',()=>handleAnswer(i));
+    btn.addEventListener('click',()=>handleAnswer(i, correctShuffledIndex, shuffledOptions));
     menu.appendChild(btn);
   });
 }
 
-function handleAnswer(chosen){
+function handleAnswer(chosen, correctShuffledIndex, shuffledOptions){
   if(state.answered)return;
   state.answered=true;
 
-  const q=QUESTIONS[state.qIndex];
-  const correct=chosen===q.answer;
+  const total=state.topic.questions.length;
+  const correct=chosen===correctShuffledIndex;
   const btns=document.querySelectorAll('.fight-btn');
   btns.forEach((b,i)=>{
     b.disabled=true;
-    if(i===q.answer)b.classList.add('correct');
+    if(i===correctShuffledIndex)b.classList.add('correct');
     else if(i===chosen&&!correct)b.classList.add('wrong');
   });
 
   if(correct){
     state.enemyHP=Math.max(0,state.enemyHP-PLAYER_DMG);
-    state.results.push(true);
+    state.results[state.qIndex]=true;
     setDot(state.qIndex,'done');
     animSprite('enemy-sprite','hit');
     animSprite('player-sprite','bounce');
     showEffect(true);
   }else{
     state.playerHP=Math.max(0,state.playerHP-ENEMY_DMG);
-    state.results.push(false);
+    if(state.results[state.qIndex]===undefined) state.results[state.qIndex]=false;
     setDot(state.qIndex,'miss');
     animSprite('player-sprite','hit');
     animSprite('enemy-sprite','bounce');
     showEffect(false);
-    // Show correct answer in dialog
     setTimeout(()=>{
       document.getElementById('dialog-text').textContent=
-        `Jawapan betul:\n${LETTERS[q.answer]}. ${q.options[q.answer]}`;
+        `Jawapan betul:\n${LETTERS[correctShuffledIndex]}. ${shuffledOptions[correctShuffledIndex]}\n\nCuba soalan ini sekali lagi!`;
     },300);
   }
 
   updateHP();
 
-  // Auto-advance after 2s
   setTimeout(()=>{
-    if(state.playerHP<=0||state.enemyHP<=0||state.qIndex>=TOTAL-1){
+    if(state.playerHP<=0||state.enemyHP<=0){
       endBattle();
+    }else if(correct){
+      if(state.qIndex>=total-1){
+        endBattle();
+      }else{
+        state.qIndex++;
+        setDot(state.qIndex,'cur');
+        renderQuestion();
+      }
     }else{
-      state.qIndex++;
-      setDot(state.qIndex,'cur');
       renderQuestion();
     }
   },2000);
@@ -802,10 +1113,8 @@ function updateHP(){
 }
 
 function endBattle(){
-  const correct=state.results.filter(Boolean).length;
-  // WIN only if the enemy's HP has been brought down to 0.
-  // Surviving all 10 questions with the player still alive is NOT
-  // enough on its own — the enemy must actually be defeated.
+  const total=state.topic.questions.length;
+  const correctCount=state.results.filter(r=>r===true).length;
   const won=state.enemyHP<=0 && state.playerHP>0;
 
   showScreen('result-screen');
@@ -820,21 +1129,25 @@ function endBattle(){
   }
 
   document.getElementById('result-score-txt').innerHTML=
-    `Skor: <span>${correct} / ${TOTAL}</span> soalan betul<br>HP tinggal: <span>${Math.max(0,state.playerHP)} / ${MAX_HP}</span>` +
+    `BAB ${state.topic.id}: ${state.topic.name.toUpperCase()}<br>`+
+    `Skor: <span>${correctCount} / ${total}</span> soalan betul<br>HP tinggal: <span>${Math.max(0,state.playerHP)} / ${MAX_HP}</span>`+
     (!won && state.playerHP>0
-      ? `<br><span style="color:#a89cc8">HP Dr. Sains masih tinggal — perlu dikalahkan sepenuhnya!</span>`
+      ? `<br><span style="color:#a89cc8">HP ${state.topic.enemyName} masih tinggal — perlu dikalahkan sepenuhnya!</span>`
       : '');
 
   const table=document.getElementById('score-table');
   table.innerHTML='';
-  state.results.forEach((r,i)=>{
-    const q=QUESTIONS[i];
-    const short=q.chapter.replace(/Bab \d+: /,'');
+  for(let i=0;i<total;i++){
+    const r=state.results[i];
     const row=document.createElement('div');
     row.className='score-row';
-    row.innerHTML=`<span>${i+1}. ${short}</span><span class="sc-right ${r?'c':'w'}">${r?'✓ BETUL':'✗ SALAH'}</span>`;
+    let rightTxt;
+    if(r===true) rightTxt='<span class="sc-right c">✓ BETUL</span>';
+    else if(r===false) rightTxt='<span class="sc-right w">✗ SALAH</span>';
+    else rightTxt='<span class="sc-right w">— TIDAK SAMPAI</span>';
+    row.innerHTML=`<span>Soalan ${i+1}</span>${rightTxt}`;
     table.appendChild(row);
-  });
+  }
 
   const actionBtn=document.getElementById('result-action-btn');
   if(won){
@@ -853,14 +1166,10 @@ function showReward(){
   document.getElementById('reward-chosen').style.display='none';
   document.getElementById('play-again-btn').style.display='none';
 
-  // If every reward character has already been recruited, refill the
-  // pool so the player can still get a (repeat) reward instead of
-  // seeing an empty screen.
   if(REWARD_POOL.length===0){
     REWARD_POOL=[...REWARD_CHARACTERS];
   }
 
-  // Pick up to 3 random characters from the remaining pool
   const pickCount=Math.min(3,REWARD_POOL.length);
   const shuffled=[...REWARD_POOL].sort(()=>Math.random()-.5).slice(0,pickCount);
   const cardsEl=document.getElementById('reward-cards');
@@ -888,22 +1197,20 @@ function chooseReward(m){
   chosen.style.display='flex';
 
   document.getElementById('chosen-title').textContent=`${m.name} bergabung dengan pasukan kamu!`;
-  // Reward "join" screen shows the FRONT-facing view (fileF)
   document.getElementById('chosen-sprite').innerHTML=`
     <img src="${m.fileF}" alt="${m.name}" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated"
       onerror="this.outerHTML='<div style=\\'width:110px;height:110px;border:2px dashed #ffe06660;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;color:#ffe066;gap:6px\\'><div style=\\'font-size:50px;opacity:.5\\'>🐉</div><div>${m.fileF}</div></div>'">`;
   document.getElementById('chosen-desc').textContent=m.desc;
   document.getElementById('play-again-btn').style.display='block';
 
-  // Add this character as a NEW slot at the end of CHAR_SLOTS (so the
-  // character-select grid grows), and remove it from REWARD_POOL so
-  // it won't be offered again as a reward until the pool is refilled.
   CHAR_SLOTS.push({id:CHAR_SLOTS.length,name:m.name,fileF:m.fileF,fileB:m.fileB,icon:"⭐"});
   REWARD_POOL=REWARD_POOL.filter(r=>r.fileF!==m.fileF);
 }
 
 // init
 renderCharSlots();
+renderTopicGrid();
+updateStartState();
 </script>
 </body>
 </html>
