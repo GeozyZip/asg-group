@@ -557,7 +557,7 @@ body{
       <!-- SIDE: character select + rules + start -->
       <div class="hub-side">
         <div class="hub-side-panel">
-          <div class="hub-side-title">PILIH WATAK KAMU</div>
+          <div class="hub-side-title">PILIH WATAK</div>
           <div class="char-slots" id="char-slots"></div>
         </div>
 
@@ -566,9 +566,9 @@ body{
           <div class="hub-rules">
             <b>•</b> Setiap bab ada 10 soalan<br>
             <b>•</b> Jawab betul → musuh hilang 1/10 HP<br>
-            <b>•</b> Jawab salah → kamu hilang 1/2 HP<br>
+            <b>•</b> Jawab salah → Hilang 1/2 HP<br>
             <b>&nbsp;&nbsp;</b>(soalan KEKAL sama, cuba lagi!)<br>
-            <b>•</b> 2 jawapan salah berturut = kamu kalah<br>
+            <b>•</b> 2 jawapan salah berturut = Kalah<br>
             <b>•</b> Kalahkan musuh untuk menang!
           </div>
         </div>
@@ -670,7 +670,7 @@ body{
 
 <!-- ══════════════ REWARD ══════════════ -->
 <div id="reward-screen" class="screen">
-  <div class="reward-title">🎉 KAMU MENANG!<br>PILIH GANJARAN KAMU!</div>
+  <div class="reward-title">🎉 TAHNIAH MISI SELESAI!<br>PILIH GANJARAN!</div>
   <div class="reward-sub">PILIH 1 DARIPADA 3 RAKAN BARU</div>
   <div class="reward-cards" id="reward-cards"></div>
   <div class="reward-chosen" id="reward-chosen">
@@ -1121,10 +1121,10 @@ function endBattle(){
 
   const banner=document.getElementById('result-banner');
   if(won){
-    banner.textContent='🏆 KAMU MENANG!';
+    banner.textContent='🏆 TAHNIAH MISI SELESAI!';
     banner.style.color='#ffe066';banner.style.borderColor='#ffe066';
   }else{
-    banner.textContent='💀 KAMU KALAH!';
+    banner.textContent='💀 ALAMAK NYAWA TELAH HABIS!';
     banner.style.color='#ef233c';banner.style.borderColor='#ef233c';
   }
 
@@ -1196,7 +1196,7 @@ function chooseReward(m){
   const chosen=document.getElementById('reward-chosen');
   chosen.style.display='flex';
 
-  document.getElementById('chosen-title').textContent=`${m.name} bergabung dengan pasukan kamu!`;
+  document.getElementById('chosen-title').textContent=`${m.name} bergabung dengan pasukan!`;
   document.getElementById('chosen-sprite').innerHTML=`
     <img src="${m.fileF}" alt="${m.name}" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated"
       onerror="this.outerHTML='<div style=\\'width:110px;height:110px;border:2px dashed #ffe06660;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;color:#ffe066;gap:6px\\'><div style=\\'font-size:50px;opacity:.5\\'>🐉</div><div>${m.fileF}</div></div>'">`;
